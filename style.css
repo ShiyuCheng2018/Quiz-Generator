@@ -1,4 +1,10 @@
+:root {
+    --main-color: #4a4969;
+    --text--color: white;
 
-.container{
-    background-color: #fff4ce;
+}
+
+.container-fluid, html{
+    background-color: var(--main-color);
+    color: var(--text--color);
 }
