@@ -2,6 +2,12 @@ $( document).ready(function() {
     console.log( "ready");
     $(".fetchIt").on("click", fetchQuestions);
     $(document).on( "click",".submit", getUserAnswers);
+    $(document).on("click", "#back-home", function () {
+        $("#question-section").addClass("d-none");
+        $("#helper-section").removeClass("d-none");
+        $("#result-section").addClass("d-none");
+        clear();
+    })
 });
 
 let correct_answers = {
@@ -13,7 +19,21 @@ function checkAnswers(){
     console.log(correct_answers);
     console.log(user_answers);
     console.log(JSON.stringify(correct_answers)===JSON.stringify(user_answers));
+    let gotRight = 0;
+    for(let key in user_answers){
+        if (user_answers[key] === correct_answers[key]){
+            gotRight++;
+        }
+    }
+    console.log(gotRight);
 
+    // Inject scores result into $("#result-container")
+    let injection = "  <div><h2>Your Scores: "+(gotRight*10)+"</h2></div>\n" +
+        "\t\t\t\t\t\t<div>\n" +
+        "\t\t\t\t\t\t\t<h4>You got "+gotRight+" questions!</h4>\n" +
+        "\t\t\t\t\t\t\t<button class=\"btn btn-dark\" id=\"back-questions\">Back to questions</button>\n" +
+        "\t\t\t\t\t\t</div>";
+    $("#result-container").append(injection);
 }
 
 function getUserAnswers(){
@@ -91,4 +111,12 @@ function getQuestions(response) {
         index++;
     });
     console.log(correct_answers)
+}
+
+function clear(){
+    correct_answers = {};
+    user_answers = {};
+    $("#question-form").text("");
+    $("#question-container button:last-child").remove();
+    $("#result-container").text("");
 }
