@@ -2,6 +2,15 @@ $( document).ready(function() {
     console.log( "ready");
     $(".fetchIt").on("click", fetchQuestions);
     $(document).on( "click",".submit", getUserAnswers);
+    $(document).on("click", "#back-questions", function () {
+        $("#question-section").removeClass("d-none");
+        $("#helper-section").addClass("d-none");
+        $("#result-section").addClass("d-none");
+        $("#question-container button:last-child").remove();
+        let injection = "<button class=\"btn btn-dark col mt-4\" id=\"back-home\">Back to home</button>";
+        $("#question-container").append(injection);
+        muteQuestions();
+    });
     $(document).on("click", "#back-home", function () {
         $("#question-section").addClass("d-none");
         $("#helper-section").removeClass("d-none");
@@ -16,42 +25,59 @@ let user_answers = {
 };
 
 function checkAnswers(){
+
+    function isCompleted(){
+        let count = 0;
+        for(let key in user_answers){
+            count ++;
+        }
+        console.log(count, correct_answers.amount);
+        return count === parseInt(correct_answers.amount);
+    }
+
     console.log(correct_answers);
     console.log(user_answers);
-    console.log(JSON.stringify(correct_answers)===JSON.stringify(user_answers));
-    let gotRight = 0;
-    for(let key in user_answers){
-        if (user_answers[key] === correct_answers[key]){
-            gotRight++;
-        }
-    }
-    console.log(gotRight);
+    if(isCompleted()){
+        $("#question-section").addClass("d-none");
+        $("#helper-section").addClass("d-none");
+        $("#result-section").removeClass("d-none");
 
-    // Inject scores result into $("#result-container")
-    let injection = "  <div><h2>Your Scores: "+(gotRight*10)+"</h2></div>\n" +
-        "\t\t\t\t\t\t<div>\n" +
-        "\t\t\t\t\t\t\t<h4>You got "+gotRight+" questions!</h4>\n" +
-        "\t\t\t\t\t\t\t<button class=\"btn btn-dark\" id=\"back-questions\">Back to questions</button>\n" +
-        "\t\t\t\t\t\t</div>";
-    $("#result-container").append(injection);
+        console.log("you submitted your answer");
+        let gotRight = 0;
+        for(let key in user_answers){
+            if (user_answers[key] === correct_answers[key]){
+                gotRight++;
+                $(".Q_"+key).addClass("right mute");
+            }
+            else {
+                $(".Q_"+key).addClass("wrong mute");
+            }
+        }
+        // Inject scores result into $("#result-container")
+        let score = (gotRight/correct_answers.amount)*100;
+        let injection = "  <div><h2>Scores: "+score+"</h2></div>\n" +
+            "\t\t\t\t\t\t<div>\n" +
+            "\t\t\t\t\t\t\t<h4>You got "+gotRight+" questions!</h4>\n" +
+            "\t\t\t\t\t\t\t<button class=\"btn btn-dark\" id=\"back-questions\">Back to questions</button>\n" +
+            "\t\t\t\t\t\t</div>";
+        $("#result-container").append(injection);
+    }else {
+        console.log("go to finish")
+    }
+
+
 }
 
 function getUserAnswers(){
-    $("#question-section").addClass("d-none");
-    $("#helper-section").addClass("d-none");
-    $("#result-section").removeClass("d-none");
 
-    console.log("you submitted your answer");
     // The collection of user input answers
     let index = 1;
     [].map.call(document.querySelectorAll('input[type="radio"]:checked'), function (each) {
         user_answers[index] = each.value;
         index++;
     });
-
     checkAnswers();
 }
-
 
 function fetchQuestions(){
     $("#question-section").removeClass("d-none");
@@ -60,11 +86,11 @@ function fetchQuestions(){
     // The collection of user selects
     let questionFilerArray = [];
     // Select all helper form-controls in order to get user's question filter
-    // let array = document.querySelectorAll('#helper-form .form-control');
     [].map.call(document.querySelectorAll('#helper-form .form-control'), function(each) {
         questionFilerArray.push(each.options[each.selectedIndex].value);
     });
-
+    // Update amount of questions into correct_answer Obj
+    correct_answers["amount"] = questionFilerArray[0];
     let myUrl = "https://opentdb.com/api.php?amount="+questionFilerArray[0]+
         "&category="+questionFilerArray[1]+
         "&difficulty="+questionFilerArray[2]+
@@ -85,7 +111,7 @@ function fetchQuestions(){
 function getQuestions(response) {
     function injectQuestions(question, answer, index){
         let injection = "<!--\t\t\t\t\t\t\t\tsingle-question-starts-->\n" +
-            "<div class=\"form-group question shadow p-3 mb-5 bg-white rounded\">\n" +
+            "<div class=\"form-group question shadow p-3 mb-5  rounded Q_"+index+"\">\n" +
             "\t\t\t\t\t\t\t\t\t<h4>"+index+". "+question+"</h4>\n" +
             "\t\t\t\t\t\t\t\t\t<hr />\n" +
             "\t\t\t\t\t\t\t\t\t<div class=\"form-check form-check-inline\">\n" +
@@ -119,4 +145,8 @@ function clear(){
     $("#question-form").text("");
     $("#question-container button:last-child").remove();
     $("#result-container").text("");
+}
+
+function muteQuestions() {
+    $("input").prop('disabled', true);
 }
