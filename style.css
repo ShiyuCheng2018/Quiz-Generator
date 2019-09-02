@@ -2,15 +2,23 @@
     --main-color: #4a4969;
     --text--color: white;
     --box-text-color--: black;
-
+    --head-color--: #323147;
 }
 .navbar-light{
     color: var(--text--color);
 }
 
-.container-fluid, html{
+.content-section, html{
     background-color: var(--main-color);
     color: var(--text--color);
+    margin-top: 3.5rem;
+}
+
+.head-container{
+    margin-top: 3.5rem;
+}
+.head{
+    background-color: var(--head-color--);
 }
 
 .question{
