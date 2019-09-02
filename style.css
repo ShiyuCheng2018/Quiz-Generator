@@ -3,6 +3,7 @@
     --text--color: white;
     --box-text-color--: black;
     --head-color--: #323147;
+    --container-bg--: white;
 }
 .navbar-light{
     color: var(--text--color);
@@ -23,4 +24,10 @@
 
 .question{
     color: var(--box-text-color--);
+}
+
+#result-container{
+    background-color: var(--container-bg--);
+    color: var(--box-text-color--);
+    padding: 1.5rem;
 }

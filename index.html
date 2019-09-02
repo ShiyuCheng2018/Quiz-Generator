@@ -46,7 +46,7 @@
 						</div>
 					</div>
 					<hr />
-					<form>
+					<form id="helper-form" method="POST">
 						<div class="form-group">
 							<label for="amount">Number of Questions</label>
 							<select class="form-control" id="amount">
@@ -61,7 +61,7 @@
 							<label for="category">Select Category</label>
 							<select class="form-control" id="category">
 								<option value="11">Entertainment: Film</option>
-								<option>Science: Computers</option>
+								<option value="18">Science: Computers</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -94,12 +94,11 @@
 							<h1 class="align-bottom float-right mt-2">Time: <span>120</span> </h1>
 						</div>
 					</div>
-
 					<hr class=""/>
 					<div class="row">
-						<div class="col-8 mx-auto">
+						<div class="col-8 mx-auto " id="question-container">
 <!--							question-form-starts-->
-							<form id="question-form">
+							<form id="question-form" class="question-form">
 							</form>
 <!--							question-form-ends-->
 						</div>
@@ -108,7 +107,25 @@
 			</div>
 		</section>
 <!--		question-section-ends-->
+<!--		result section-->
+		<section class="d-none" id="result-section">
+			<div class="row">
+				<div class="col-md-8 mx-auto">
+					<div class=" row head-container fixed-top">
+						<div class="col-8 mx-auto head overflow-auto rounded-lg">
+							<h1 class="my-2 float-left">Result</h1>
+						</div>
+					</div>
+					<hr />
 
+					<div id="result-container" class="rounded-lg">
+                         <div><h4>Your Scores: 80</h4></div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+<!--		result section ends-->
 	</div>
 
 
