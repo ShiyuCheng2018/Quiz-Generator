@@ -8,6 +8,10 @@
     --right--: green;
     --mute--: #cacaca;
 }
+
+.navbar-collapse{
+    z-index: 5;
+}
 .navbar-light{
     color: var(--text--color);
 }

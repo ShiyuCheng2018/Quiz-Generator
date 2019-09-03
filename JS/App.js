@@ -60,26 +60,22 @@ function checkAnswers(){
         "\t\t\t\t\t\t\t<button class=\"btn btn-dark\" id=\"back-questions\">Back to questions</button>\n" +
         "\t\t\t\t\t\t</div>";
     $("#result-container").append(injection);
-
-
-
 }
 
 function getUserAnswers(){
-
+    console.log(isCompleted());
+    let index = 1;
+    [].map.call(document.querySelectorAll('input[type="radio"]:checked'), function (each) {
+        user_answers[index] = each.value;
+        index++;
+    });
     if(isCompleted()){
         clearInterval(timeCount);
         // The collection of user input answers
-        let index = 1;
-        [].map.call(document.querySelectorAll('input[type="radio"]:checked'), function (each) {
-            user_answers[index] = each.value;
-            index++;
-        });
         checkAnswers();
     }else {
         console.log("go to finish your quiz !");
     }
-
 }
 
 function fetchQuestions(){
@@ -117,7 +113,6 @@ function fetchQuestions(){
             $("#question-container").append( "<button class=\"btn btn-dark col mt-4\" id=\"back-home\">" +
                 "Sorry, this is no result! Try again! </button>")
         }
-
     });
     
     let time;
