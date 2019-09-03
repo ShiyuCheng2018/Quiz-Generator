@@ -19,6 +19,7 @@ $( document).ready(function() {
     })
 });
 
+let timeCount;
 let correct_answers = {
 };
 let user_answers = {
@@ -69,7 +70,7 @@ function checkAnswers(){
 }
 
 function getUserAnswers(){
-
+    clearInterval(timeCount);
     // The collection of user input answers
     let index = 1;
     [].map.call(document.querySelectorAll('input[type="radio"]:checked'), function (each) {
@@ -106,6 +107,37 @@ function fetchQuestions(){
         let injection = "<button class=\"btn btn-dark col submit\">Submit</button>";
         $("#question-container").append(injection);
     });
+    
+    let time;
+    switch (correct_answers.amount) {
+        case "1":
+            time = 10;
+            break;
+        case "5":
+            time = 30;
+            break;
+        case "10":
+            time = 60;
+            break;
+        case "15":
+            time = 90;
+            break;
+        case "20":
+            time = 120;
+            break;
+    }
+    
+     timeCount = setInterval(function () {
+        if(time >= 0){
+            $(".time-count").text(time);
+            time--;
+        }else {
+            muteQuestions();
+            clearInterval(timeCount);
+            $("#question-container button:last-child").remove();
+            $("#question-container").append( "<button class=\"btn btn-dark col mt-4\" id=\"back-home\">Time Out! Back to Home</button>")
+        }
+    }, 1000);
 }
 
 function getQuestions(response) {
@@ -136,7 +168,7 @@ function getQuestions(response) {
         correct_answers[index] = question.correct_answer;
         index++;
     });
-    console.log(correct_answers)
+    console.log(correct_answers);
 }
 
 function clear(){
