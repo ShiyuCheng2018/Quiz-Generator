@@ -65,13 +65,13 @@ function checkAnswers(){
 function getUserAnswers(){
     console.log(isCompleted());
     let index = 1;
+    // The collection of user input answers
     [].map.call(document.querySelectorAll('input[type="radio"]:checked'), function (each) {
         user_answers[index] = each.value;
         index++;
     });
     if(isCompleted()){
         clearInterval(timeCount);
-        // The collection of user input answers
         checkAnswers();
     }else {
         console.log("go to finish your quiz !");
