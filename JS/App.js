@@ -25,59 +25,61 @@ let correct_answers = {
 let user_answers = {
 };
 
-function checkAnswers(){
-
-    function isCompleted(){
-        let count = 0;
-        for(let key in user_answers){
-            count ++;
-        }
-        console.log(count, correct_answers.amount);
-        return count === parseInt(correct_answers.amount);
+function isCompleted(){
+    let count = 0;
+    for(let key in user_answers){
+        count ++;
     }
+    console.log(count, correct_answers.amount);
+    return count === parseInt(correct_answers.amount);
+}
 
+function checkAnswers(){
     console.log(correct_answers);
     console.log(user_answers);
-    if(isCompleted()){
-        $("#question-section").addClass("d-none");
-        $("#helper-section").addClass("d-none");
-        $("#result-section").removeClass("d-none");
+    $("#question-section").addClass("d-none");
+    $("#helper-section").addClass("d-none");
+    $("#result-section").removeClass("d-none");
 
-        console.log("you submitted your answer");
-        let gotRight = 0;
-        for(let key in user_answers){
-            if (user_answers[key] === correct_answers[key]){
-                gotRight++;
-                $(".Q_"+key).addClass("right mute");
-            }
-            else {
-                $(".Q_"+key).addClass("wrong mute");
-            }
+    console.log("you submitted your answer");
+    let gotRight = 0;
+    for(let key in user_answers){
+        if (user_answers[key] === correct_answers[key]){
+            gotRight++;
+            $(".Q_"+key).addClass("right mute");
         }
-        // Inject scores result into $("#result-container")
-        let score = (gotRight/correct_answers.amount)*100;
-        let injection = "  <div><h2>Scores: "+score+"</h2></div>\n" +
-            "\t\t\t\t\t\t<div>\n" +
-            "\t\t\t\t\t\t\t<h4>You got "+gotRight+" questions!</h4>\n" +
-            "\t\t\t\t\t\t\t<button class=\"btn btn-dark\" id=\"back-questions\">Back to questions</button>\n" +
-            "\t\t\t\t\t\t</div>";
-        $("#result-container").append(injection);
-    }else {
-        console.log("go to finish")
+        else {
+            $(".Q_"+key).addClass("wrong mute");
+        }
     }
+    // Inject scores result into $("#result-container")
+    let score = (gotRight/correct_answers.amount)*100;
+    let injection = "  <div><h2>Scores: "+score+"</h2></div>\n" +
+        "\t\t\t\t\t\t<div>\n" +
+        "\t\t\t\t\t\t\t<h4>You got "+gotRight+" questions!</h4>\n" +
+        "\t\t\t\t\t\t\t<button class=\"btn btn-dark\" id=\"back-questions\">Back to questions</button>\n" +
+        "\t\t\t\t\t\t</div>";
+    $("#result-container").append(injection);
+
 
 
 }
 
 function getUserAnswers(){
-    clearInterval(timeCount);
-    // The collection of user input answers
-    let index = 1;
-    [].map.call(document.querySelectorAll('input[type="radio"]:checked'), function (each) {
-        user_answers[index] = each.value;
-        index++;
-    });
-    checkAnswers();
+
+    if(isCompleted()){
+        clearInterval(timeCount);
+        // The collection of user input answers
+        let index = 1;
+        [].map.call(document.querySelectorAll('input[type="radio"]:checked'), function (each) {
+            user_answers[index] = each.value;
+            index++;
+        });
+        checkAnswers();
+    }else {
+        console.log("go to finish your quiz !");
+    }
+
 }
 
 function fetchQuestions(){
