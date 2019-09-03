@@ -55,7 +55,7 @@ function checkAnswers(){
             }
         }
         // Inject scores result into $("#result-container")
-        let score = gotRight/correct_answers.amount*100;
+        let score = (gotRight/correct_answers.amount)*100;
         let injection = "  <div><h2>Scores: "+score+"</h2></div>\n" +
             "\t\t\t\t\t\t<div>\n" +
             "\t\t\t\t\t\t\t<h4>You got "+gotRight+" questions!</h4>\n" +
