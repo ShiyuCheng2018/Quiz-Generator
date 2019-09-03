@@ -55,7 +55,7 @@ function checkAnswers(){
             }
         }
         // Inject scores result into $("#result-container")
-        let score = (gotRight/correct_answers.amount)*100;
+        let score = Math.floor(gotRight/correct_answers.amount)*100;
         let injection = "  <div><h2>Scores: "+score+"</h2></div>\n" +
             "\t\t\t\t\t\t<div>\n" +
             "\t\t\t\t\t\t\t<h4>You got "+gotRight+" questions!</h4>\n" +
@@ -102,10 +102,20 @@ function fetchQuestions(){
         url: myUrl,
         method: "GET"
     }).then(function(response) {
-        getQuestions(response);
-        // Inject submit button
-        let injection = "<button class=\"btn btn-dark col submit\">Submit</button>";
-        $("#question-container").append(injection);
+        console.log(response.results);
+
+        if(response.results.length !== 0){
+            getQuestions(response);
+            // Inject submit button
+            let injection = "<button class=\"btn btn-dark col submit\">Submit</button>";
+            $("#question-container").append(injection);
+        }else {
+            clearInterval(timeCount);
+            $("#question-container button:last-child").remove();
+            $("#question-container").append( "<button class=\"btn btn-dark col mt-4\" id=\"back-home\">" +
+                "Sorry, this is no result! Try again! </button>")
+        }
+
     });
     
     let time;
