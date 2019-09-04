@@ -82,6 +82,7 @@ function getUserAnswers(){
         clearInterval(timeCount);
         checkAnswers();
     }else {
+        alert("\"You cannot submit until you finish all the problem!\"");
         console.log("go to finish your quiz !");
     }
 }
