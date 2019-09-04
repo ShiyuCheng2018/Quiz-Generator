@@ -16,6 +16,14 @@ $( document).ready(function() {
         $("#helper-section").removeClass("d-none");
         $("#result-section").addClass("d-none");
         clear();
+    });
+    // hide or visible when use click toggler button
+    $(".navbar-toggler").on("click", function () {
+       if( $(".head").is(":visible")){
+           $(".head").hide();
+       }else {
+           $(".head").show();
+       }
     })
 });
 
@@ -100,8 +108,6 @@ function fetchQuestions(){
         url: myUrl,
         method: "GET"
     }).then(function(response) {
-        console.log(response.results);
-
         if(response.results.length !== 0){
             getQuestions(response);
             // Inject submit button
