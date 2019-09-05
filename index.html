@@ -10,6 +10,7 @@
 <!--		javascript-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="JS/App.js"></script>
+	<script src="JS/try.js"></script>
 <!--	font-awesome-->
 	<script src="https://kit.fontawesome.com/d1415ff865.js"></script>
 	<title>Quiz Time!</title>
@@ -107,13 +108,14 @@
 				<div class="col-md-8 mx-auto">
 					<div class=" row head-container fixed-top">
 						<div class="col-md-8 col-10 mx-auto head overflow-auto rounded-lg">
-							<h1 class="my-2 float-left">Quiz Time <i class="fas fa-edit"></i></h1>
-							<h1 class="align-bottom float-right mt-1"><i class="fas fa-stopwatch"></i>: <span class="time-count"></span> </h1>
+							<h1 class="my-2 float-left d-none d-md-block">Quiz Time <i class="fas fa-edit"></i></h1>
+							<h1 class="my-2 float-left d-md-none d-block">Quiz <i class="fas fa-edit"></i></h1>
+							<h1 class="align-bottom float-right my-2"><i class="fas fa-stopwatch"></i>: <span class="time-count"></span> </h1>
 						</div>
 					</div>
 					<hr class=""/>
 					<div class="row">
-						<div class="col-8 mx-auto " id="question-container">
+						<div class="col-md-8 mx-auto col-11" id="question-container">
 <!--							question-form-starts-->
 							<form id="question-form" class="question-form">
 							</form>
